@@ -1,0 +1,92 @@
+{
+  "project_crs": "EPSG:5186",
+  "timezone": "Asia/Seoul",
+  "location": {"latitude": 37.5145, "longitude": 127.1059},
+  "files": {
+    "walkways": "data/raw/songpa_walkways.gpkg",
+    "boundary": "data/raw/songpa_boundary.gpkg",
+    "buildings_zip": "data/raw/buildings_seoul.zip",
+    "building_register": "data/raw/building_register.csv",
+    "street_trees": "data/raw/street_trees.csv",
+    "asos": "data/raw/asos_hourly.csv",
+    "pavement": "data/raw/SWM_WKAR_AS.csv",
+    "pavement_codes": "data/raw/SWM_BASIC_CODE.csv",
+    "measured_surface_temperature": "data/raw/measured_surface_temperature.csv"
+  },
+  "layers": {"walkways": null, "boundary": null},
+  "columns": {
+    "asos_time": ["일시", "TM", "datetime"],
+    "air_temperature": ["기온(°C)", "기온(℃)", "기온", "TA"],
+    "humidity": ["습도(%)", "습도", "HM"],
+    "wind_speed": ["풍속(m/s)", "풍속", "WS"],
+    "rainfall": ["강수량(mm)", "강수량", "RN"],
+    "solar_radiation": ["일사(MJ/m2)", "일사(MJ/㎡)", "일사", "SI"],
+    "tree_lon": ["경도", "longitude", "lon"],
+    "tree_lat": ["위도", "latitude", "lat"],
+    "tree_height": ["수고", "tree_height"],
+    "tree_crown_width": ["수관너비", "crown_width"],
+    "tree_district": ["구명", "district"],
+    "pavement_code": ["SWB_CODE", "포장재코드"],
+    "pavement_xmin": ["G2_XMIN"], "pavement_ymin": ["G2_YMIN"],
+    "pavement_xmax": ["G2_XMAX"], "pavement_ymax": ["G2_YMAX"]
+  },
+  "time": {
+    "start": null,
+    "end": null,
+    "shadow_interval_minutes": 60,
+    "recent_sun_window_hours": 3,
+    "cumulative_window_hours": 6
+  },
+  "geometry": {
+    "edge_sample_spacing_m": 20,
+    "max_building_shadow_m": 180,
+    "max_tree_shadow_m": 30,
+    "default_floor_height_m": 3.0,
+    "default_building_height_m": 9.0,
+    "default_tree_height_m": 8.0,
+    "default_tree_crown_width_m": 4.0,
+    "pavement_coordinate_scale": 100.0,
+    "pavement_join_max_distance_m": 50.0,
+    "node_snap_m": 0.5
+  },
+  "heat": {
+    "thermal_memory_hours": 2.5,
+    "wind_cooling_factor": 0.12,
+    "rain_cooling_factor": 0.35,
+    "surface_absorptivity": {
+      "SWB001": 0.70, "SWB002": 0.68, "SWB003": 0.65,
+      "SWB004": 0.72, "SWB005": 0.88, "SWB006": 0.82,
+      "SWB007": 0.66, "SWB008": 0.75, "SWB999": 0.75,
+      "unknown": 0.75
+    }
+  },
+  "clustering": {
+    "k_values": [2, 3, 4, 5],
+    "random_state": 42,
+    "sample_limit": 50000,
+    "features": [
+      "surface_absorptivity", "recent_direct_sun_minutes",
+      "cumulative_effective_solar_mj_m2", "shade_ratio",
+      "air_temperature_c", "humidity_pct", "wind_speed_ms",
+      "rainfall_mm", "heat_storage_proxy"
+    ],
+    "heat_direction_weights": {
+      "surface_absorptivity": 0.12,
+      "recent_direct_sun_minutes": 0.18,
+      "cumulative_effective_solar_mj_m2": 0.23,
+      "shade_ratio": -0.18,
+      "air_temperature_c": 0.15,
+      "humidity_pct": 0.02,
+      "wind_speed_ms": -0.06,
+      "rainfall_mm": -0.04,
+      "heat_storage_proxy": 0.18
+    }
+  },
+  "routing": {
+    "default_time": null,
+    "modes": {
+      "fast": {"heat_weight": 0.0},
+      "cool": {"heat_weight": 0.95}
+    }
+  }
+}
